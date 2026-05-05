@@ -27,7 +27,9 @@ import org.apache.syncope.client.console.wicket.markup.html.link.VeilPopupSettin
 import org.apache.syncope.client.ui.commons.Constants;
 import org.apache.syncope.client.ui.commons.markup.html.form.IndicatingOnConfirmAjaxLink;
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.ajax.AjaxChannel;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.authroles.authorization.strategies.role.metadata.MetaDataRoleAuthorizationStrategy;
 import org.apache.wicket.event.Broadcast;
 import org.apache.wicket.extensions.ajax.markup.html.IndicatingAjaxLink;
@@ -116,6 +118,17 @@ public final class ActionPanel<T extends Serializable> extends Panel {
                     : new IndicatingAjaxLink<Void>(Constants.ACTION) {
 
                 private static final long serialVersionUID = -7978723352517770644L;
+
+                @Override
+                protected void updateAjaxAttributes(final AjaxRequestAttributes attributes) {
+                    super.updateAjaxAttributes(attributes);
+                    switch (action.getType()) {
+                        case ZOOM_IN, ZOOM_OUT, AUTO_LAYOUT, RECENTER ->
+                            attributes.setChannel(new AjaxChannel("ui-fast-actions", AjaxChannel.Type.DROP));
+                        default -> {
+                        }
+                    }
+                }
 
                 @Override
                 public void onClick(final AjaxRequestTarget target) {

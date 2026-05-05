@@ -197,6 +197,26 @@ public class Topology extends BasePage {
             }
         }, ActionLink.ActionType.ZOOM_OUT, IdMEntitlement.CONNECTOR_LIST).disableIndicator().hideLabel();
 
+        zoomActionPanel.add(new ActionLink<>() {
+
+            private static final long serialVersionUID = -3722207913631435501L;
+
+            @Override
+            public void onClick(final AjaxRequestTarget target, final Serializable ignore) {
+                target.appendJavaScript("autoLayoutTree({ centerInView: false });");
+            }
+        }, ActionLink.ActionType.AUTO_LAYOUT, IdMEntitlement.CONNECTOR_LIST).disableIndicator().hideLabel();
+
+        zoomActionPanel.add(new ActionLink<>() {
+
+            private static final long serialVersionUID = -3722207913631435501L;
+
+            @Override
+            public void onClick(final AjaxRequestTarget target, final Serializable ignore) {
+                target.appendJavaScript("recenterToTree();");
+            }
+        }, ActionLink.ActionType.RECENTER, IdMEntitlement.CONNECTOR_LIST).disableIndicator().hideLabel();
+
         body.add(zoomActionPanel);
         // -----------------------------------------
 
@@ -464,6 +484,10 @@ public class Topology extends BasePage {
                 jsPlumbConf.append(String.format(Locale.US, "activate(%.2f);", 0.68f));
 
                 createConnections(connections).forEach(jsPlumbConf::append);
+                // Apply the tree layout on first load (when no saved node positions exist yet).
+                jsPlumbConf.append("var __topo=getTopology();var __hasPos=false;"
+                        + "for(var __k in __topo){if(__k!=='__zoom__'){__hasPos=true;break;}}"
+                        + "if(!__hasPos){autoLayoutTree({ centerInView: false });}");
 
                 response.render(OnDomReadyHeaderItem.forScript(jsPlumbConf.toString()));
             }
