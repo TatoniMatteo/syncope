@@ -19,6 +19,7 @@
 
 @import 'theme';
 @import 'utils';
+@import "triplestate";
 
 [data-bs-theme=dark] .sidebar-wrapper {
   background-color: rgba(var(--bs-secondary-bg-rgb), var(--bs-bg-opacity)) !important;
@@ -449,7 +450,7 @@ td.checkGroupColumn {
 
 .pwstrengthProgress {
   position: absolute;
-  margin-top: 35px;
+  margin-top: 40px;
   width: 100%;
 }
 

@@ -48,13 +48,13 @@ import org.apache.syncope.client.console.panels.search.UserSearchPanel;
 import org.apache.syncope.client.console.rest.SchemaRestClient;
 import org.apache.syncope.client.lib.SyncopeClient;
 import org.apache.syncope.client.ui.commons.DateOps;
-import org.apache.syncope.client.ui.commons.markup.html.form.AjaxCheckBoxPanel;
 import org.apache.syncope.client.ui.commons.markup.html.form.AjaxDateTimeFieldPanel;
 import org.apache.syncope.client.ui.commons.markup.html.form.AjaxDropDownChoicePanel;
 import org.apache.syncope.client.ui.commons.markup.html.form.AjaxGridFieldPanel;
 import org.apache.syncope.client.ui.commons.markup.html.form.AjaxNumberFieldPanel;
 import org.apache.syncope.client.ui.commons.markup.html.form.AjaxPalettePanel;
 import org.apache.syncope.client.ui.commons.markup.html.form.AjaxTextFieldPanel;
+import org.apache.syncope.client.ui.commons.markup.html.form.AjaxTripleStateButtonPanel;
 import org.apache.syncope.client.ui.commons.markup.html.form.FieldPanel;
 import org.apache.syncope.client.ui.commons.markup.html.form.MultiFieldPanel;
 import org.apache.syncope.common.lib.report.SearchCondition;
@@ -291,7 +291,7 @@ public class BeanPanel<T extends Serializable> extends Panel {
 
         FieldPanel panel;
         if (ClassUtils.isAssignable(Boolean.class, type)) {
-            panel = new AjaxCheckBoxPanel(id, fieldName, model);
+            panel = new AjaxTripleStateButtonPanel(id, fieldName, model);
         } else if (ClassUtils.isAssignable(Number.class, type)) {
             panel = new AjaxNumberFieldPanel.Builder<>().build(
                     id, fieldName, AjaxNumberFieldPanel.cast(ClassUtils.resolvePrimitiveIfNecessary(type)), model);
